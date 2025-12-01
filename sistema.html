@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Auditorias</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ✅ MENSAGEM DE SUCESSO -->
+    <div id="msg-sucesso" style="
+        display:none;
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #d4edda;
+        color: #155724;
+        padding: 12px 20px;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        font-family: Arial, sans-serif;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.4s ease;">
+        ✔ Auditoria registrada com sucesso!
+    </div>
+
+    <header>
+        <h1>Controle de Auditorias</h1>
+        <p>Registro e acompanhamento de auditorias internas e externas</p>
+    </header>
+
+    <main>
+        <section class="form-section">
+            <h2>Registrar Nova Auditoria</h2>
+            <form id="audit-form">
+                <label for="tipo">Tipo de Auditoria:</label>
+                <select id="tipo" required>
+                    <option value="">Selecione</option>
+                    <option value="Interna">Interna</option>
+                    <option value="Externa">Externa</option>
+                </select>
+
+                <label for="data">Data da Auditoria:</label>
+                <input type="date" id="data" required >
+
+                <label for="responsavel">Responsável:</label>
+                <input type="text" id="responsavel" placeholder="Nome do auditor responsável" required>
+
+                <label for="resultado">Resultado:</label>
+                <textarea id="resultado" placeholder="Resumo dos resultados" required></textarea>
+
+                <label for="recomendacao">Recomendações:</label>
+                <textarea id="recomendacao" placeholder="Recomendações para melhorias" required></textarea>
+
+                <label for="prazo">Prazo para Ações Corretivas:</label>
+                <input type="date" id="prazo" required>
+
+                <button type="submit">Registrar Auditoria</button>
+            </form>
+        </section>
+
+        <section class="table-section">
+            <h2>Auditorias Registradas</h2>
+            <table id="audit-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Data</th>
+                        <th>Responsável</th>
+                        <th>Resultado</th>
+                        <th>Recomendações</th>
+                        <th>Prazo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Linhas serão inseridas aqui via JS -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 - Sistema de Controle de Auditorias</p>
+    </footer>
+
+    <script>
+
+        /* ✅ Função para mostrar a mensagem de sucesso */
+function mostrarSucesso() {
+        const msg = document.getElementById("msg-sucesso");
+        msg.style.display = "block";
+        msg.style.opacity = "1";
+
+        setTimeout(() => {
+            msg.style.opacity = "0";
+            setTimeout(() => msg.style.display = "none", 500);
+        }, 3000);
+    }
+
+    // Converte data ISO para BR
+    function formatarDataBR(dataISO) {
+        const partes = dataISO.split("-");
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+
+    // 🚫 Validação: Data da Auditoria NÃO pode ser maior que o Prazo
+    document.getElementById("audit-form").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const tipo = document.getElementById("tipo").value;
+        const data = document.getElementById("data").value;
+        const responsavel = document.getElementById("responsavel").value;
+        const resultado = document.getElementById("resultado").value;
+        const recomendacao = document.getElementById("recomendacao").value;
+        const prazo = document.getElementById("prazo").value;
+
+        // ❗️ Verificação de datas
+        if (new Date(data) > new Date(prazo)) {
+            alert("A data da auditoria NÃO pode ser maior que o prazo das ações corretivas.");
+            return; // impede o registro
+        }
+
+        // 🆗 Se passou na validação, adiciona na tabela
+        const table = document.getElementById("audit-table").querySelector("tbody");
+        const newRow = table.insertRow();
+
+        newRow.innerHTML = `
+            <td>${tipo}</td>
+            <td>${formatarDataBR(data)}</td>
+            <td>${responsavel}</td>
+            <td>${resultado}</td>
+            <td>${recomendacao}</td>
+            <td>${formatarDataBR(prazo)}</td>
+        `;
+
+        document.getElementById("audit-form").reset();
+        mostrarSucesso();
+    });
+</script>
+
+</body>
+</html>

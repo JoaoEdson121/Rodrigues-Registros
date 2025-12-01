@@ -1,0 +1,56 @@
+/* ====== Contatos ====== */
+footer {
+
+    font-family: Arial, sans-serif;
+      background: #cecccc;
+      display: flex;
+      margin:  0px;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: center;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgb(0, 149, 236);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    strong { color: #555; }
+
+
+/* ====== Sucesso ====== */
+    body {
+      font-family: Arial, sans-serif;
+      background: #e6ffe6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .mensagem {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #1f1e1e;
+    }
+    p {
+      color: #444;
+    }

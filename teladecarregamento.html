@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carregando...</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0a2c5f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .loader {
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-top: 6px solid #ffffff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    h2 {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: normal;
+    }
+
+    .center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="center">
+    <div class="loader"></div>
+    <h2>Carregando...</h2>
+  </div>
+
+  <script>
+    // Redireciona após 1.5 segundos
+    setTimeout(() => {
+      window.location.href = "sistema.html";
+    }, 1500);
+  </script>
+
+</body>
+</html>
