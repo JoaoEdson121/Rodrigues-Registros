@@ -86,10 +86,10 @@
         <p>© 2025 - Sistema de Controle de Auditorias</p>
     </footer>
 
-    <script>
+<script>
 
-        /* ✅ Função para mostrar a mensagem de sucesso */
-function mostrarSucesso() {
+    /* ✅ Função para mostrar a mensagem de sucesso */
+    function mostrarSucesso() {
         const msg = document.getElementById("msg-sucesso");
         msg.style.display = "block";
         msg.style.opacity = "1";
@@ -106,7 +106,14 @@ function mostrarSucesso() {
         return `${partes[2]}/${partes[1]}/${partes[0]}`;
     }
 
-    // 🚫 Validação: Data da Auditoria NÃO pode ser maior que o Prazo
+    // ⛔ Impedir datas anteriores ao dia atual
+    window.onload = function () {
+        const hoje = new Date().toISOString().split("T")[0];
+        document.getElementById("data").setAttribute("min", hoje);
+        document.getElementById("prazo").setAttribute("min", hoje);
+    };
+
+    // 🚫 Validação: datas inválidas no submit
     document.getElementById("audit-form").addEventListener("submit", function(e) {
         e.preventDefault();
 
@@ -117,13 +124,29 @@ function mostrarSucesso() {
         const recomendacao = document.getElementById("recomendacao").value;
         const prazo = document.getElementById("prazo").value;
 
-        // ❗️ Verificação de datas
-        if (new Date(data) > new Date(prazo)) {
-            alert("A data da auditoria NÃO pode ser maior que o prazo das ações corretivas.");
-            return; // impede o registro
+        const hoje = new Date().setHours(0, 0, 0, 0);
+        const dataAudit = new Date(data).setHours(0, 0, 0, 0);
+        const dataPrazo = new Date(prazo).setHours(0, 0, 0, 0);
+
+        // ⛔ Data da auditoria não pode ser no passado
+        if (dataAudit < hoje) {
+            alert("A data da auditoria não pode ser anterior a hoje.");
+            return;
         }
 
-        // 🆗 Se passou na validação, adiciona na tabela
+        // ⛔ Prazo não pode ser no passado
+        if (dataPrazo < hoje) {
+            alert("O prazo não pode ser anterior a hoje.");
+            return;
+        }
+
+        // ⛔ Data da auditoria não pode ser maior que o prazo
+        if (dataAudit > dataPrazo) {
+            alert("A data da auditoria NÃO pode ser maior que o prazo das ações corretivas.");
+            return;
+        }
+
+        // 🆗 Se passou nas validações, insere na tabela
         const table = document.getElementById("audit-table").querySelector("tbody");
         const newRow = table.insertRow();
 
